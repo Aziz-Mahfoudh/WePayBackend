@@ -25,16 +25,13 @@ public class PaymentService {
 
     public PaymentResponse createPayment(PaymentRequest paymentRequest) {
 
-        String paymentId = UUID.randomUUID().toString();
+        String paymentId = generatePaymentId();
         BusinessUser businessUser = businessRepository.findBusinessUserById(paymentRequest.getBeneficiaryId());
-
-        if (businessUser != null) {
-            logger.info("Found payment");
-        }
 
         Payment payment = Payment.builder()
                 .beneficiary(businessUser)
                 .paymentId(paymentId)
+                .originId(paymentId)
                 .total(paymentRequest.getTotal())
                 .currency(paymentRequest.getCurrency())
                 .method(paymentRequest.getMethod())
@@ -79,6 +76,53 @@ public class PaymentService {
                 .paymentId(request.getPaymentId())
                 .status("SUCCEED")
                 .build();
+    }
+
+   /** public PaymentExecutionResponse executeSplitPayment(SplitPaymentRequest request) {
+        Payment payment = paymentRepository.findByPaymentId(request.getPaymentId());
+
+        List<String> paymentIds = splitPayment(request, payment);
+        for(String paymentId : paymentIds) {
+            String username = paymentRepository.findByPaymentId(paymentId).get
+            PaymentExecutionRequest paymentExecutionRequest = PaymentExecutionRequest.builder()
+                            .paymentId(paymentId)
+                                    .username()
+
+            executePayment()
+        }
+    }**/
+
+    public List<String> splitPayment(SplitPaymentRequest request) {
+        List<Payment> payments = new ArrayList<>();
+        List<String> paymentIds = new ArrayList<>();
+
+        Payment payment = paymentRepository.findByPaymentId(request.getPaymentId());
+        for(EmailAndAmount field : request.list) {
+            ParticularUser payer = particularRepository.findByEmail(field.getEmail());
+
+            Payment paymentInstance = Payment.builder()
+                    .paymentId(generatePaymentId())
+                    .originId(payment.getPaymentId())
+                    .beneficiary(payment.getBeneficiary())
+                    .total(Double.parseDouble(field.getAmount()))
+                    .cancelUrl("cancel")
+                    .successUrl("success")
+                    .method(payment.getMethod())
+                    .currency(payment.getCurrency())
+                    .paymentStatus(payment.getPaymentStatus())
+                    .build();
+            paymentRepository.save(paymentInstance);
+            paymentIds.add(paymentInstance.getPaymentId());
+            logger.info("Sent Email!!!!");
+
+
+        }
+        return paymentIds;
+    }
+
+
+    public String generatePaymentId() {
+        return UUID.randomUUID().toString();
     }
 
     public void correctBalances(Payment payment) {

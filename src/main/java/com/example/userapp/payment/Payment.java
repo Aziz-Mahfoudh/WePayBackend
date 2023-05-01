@@ -8,9 +8,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
-import java.time.Instant;
 
 
 @Data
@@ -26,6 +24,7 @@ public class Payment {
     @GeneratedValue
     private Integer id;
     private String paymentId;
+    private String originId;
     @ManyToOne
     @JoinColumn(name = "beneficiary_id")
     private BusinessUser beneficiary;
@@ -44,6 +43,7 @@ public class Payment {
     public Payment(BusinessUser beneficiary,
                    ParticularUser payer,
                    String paymentId,
+                   String originId,
                    Double total,
                    String currency,
                    String method,
@@ -53,6 +53,7 @@ public class Payment {
         this.beneficiary = beneficiary;
         this.payer = payer;
         this.paymentId = paymentId;
+        this.originId = originId;
         this.total = total;
         this.currency = currency;
         this.method = method;

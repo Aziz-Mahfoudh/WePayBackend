@@ -43,4 +43,9 @@ public class PaymentController {
     public ResponseEntity<List<PaymentHistoryResponse>> getAllPaymentsByPayerIdForHistory(@PathVariable Integer id) {
         return ResponseEntity.ok(paymentService.getAllPaymentsByPayerIdForHistory(id));
     }
+
+    @PostMapping("/payments/split")
+    public ResponseEntity<List<String>> splitPayment(@RequestBody SplitPaymentRequest request) {
+        return ResponseEntity.ok(paymentService.splitPayment(request));
+    }
 }

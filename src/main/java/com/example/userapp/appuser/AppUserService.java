@@ -33,6 +33,7 @@ public class AppUserService implements UserDetailsService {
     public AppUser updateUserBalanceById(BalanceUpdateRequest request,Integer id) {
         AppUser user = userRepository.findAppUserById(id);
         user.setBalance(request.getBalance() == null ? user.getBalance() : request.getBalance());
+        userRepository.save(user);
         return user;
     }
     public AppUser updateUserById(ParticularUserUpdateRequest request,Integer id) {
