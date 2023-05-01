@@ -1,4 +1,5 @@
 package com.example.userapp.security.config;
+
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,14 +18,13 @@ public class WebSecurityConfig {
 
     private AuthenticationProvider authenticationProvider;
     private JwtAuthenticationFilter jwtAuthFilter;
-
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .csrf()
                 .disable()
                 .authorizeHttpRequests()
-                .requestMatchers("/api/v1/auth/**", "/api/v1/users/**", "/api/v1/payment/**")
+                .requestMatchers("/api/v1/auth/**")
                     .permitAll()
                 .anyRequest()
                     .authenticated()
@@ -36,7 +36,7 @@ public class WebSecurityConfig {
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
 
         ;
-        
+
         return http.build();
     }
 

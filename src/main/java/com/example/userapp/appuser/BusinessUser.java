@@ -10,7 +10,7 @@ import lombok.experimental.SuperBuilder;
 import java.util.List;
 import java.util.UUID;
 
-
+@EntityListeners(BusinessUserListener.class)
 @Data
 @SuperBuilder
 @AllArgsConstructor
@@ -24,6 +24,7 @@ public class BusinessUser extends AppUser{
     private String storeName;
     private String industry;
     private String phone;
+    private String accountIdentifier;
     @OneToMany(mappedBy = "beneficiary")
     private List<Payment> paymentList;
     public BusinessUser(String email,
@@ -40,6 +41,7 @@ public class BusinessUser extends AppUser{
         this.storeName = storeName;
         this.industry = industry;
         this.phone = phone;
+        this.accountIdentifier = UUID.randomUUID().toString();
     }
 
 }

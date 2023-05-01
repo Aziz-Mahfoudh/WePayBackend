@@ -13,6 +13,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
+@EntityListeners(AppUserListener.class)
 @Data
 @SuperBuilder
 @NoArgsConstructor
@@ -34,7 +35,7 @@ public class AppUser implements UserDetails {
     private Boolean locked;
     private Boolean enabled;
     private Double balance;
-    private String accountIdentifier;
+
     @OneToMany(mappedBy = "user")
     private List<Token> tokens;
 
@@ -90,11 +91,7 @@ public class AppUser implements UserDetails {
         return true;
     }
 
-    @PrePersist
-    public void setInitialBalance() {
-        this.balance = 0.0;
-        this.accountIdentifier = UUID.randomUUID().toString();
-    }
+
 }
 
 

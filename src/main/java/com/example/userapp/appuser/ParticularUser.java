@@ -11,6 +11,7 @@ import lombok.experimental.SuperBuilder;
 import java.util.List;
 import java.util.UUID;
 
+@EntityListeners(ParticularUserListener.class)
 @Data
 @SuperBuilder
 @AllArgsConstructor
@@ -25,6 +26,7 @@ public class ParticularUser extends AppUser{
     private String firstName;
     private String lastName;
     private String phone;
+    private String accountIdentifier;
     @OneToMany(mappedBy = "payer")
     private List<Payment> paymentList;
     public ParticularUser(String email,
@@ -42,4 +44,6 @@ public class ParticularUser extends AppUser{
         this.lastName = lastName;
         this.phone = phone;
     }
+
+
 }

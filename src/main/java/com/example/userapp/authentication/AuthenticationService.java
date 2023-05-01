@@ -1,12 +1,13 @@
 package com.example.userapp.authentication;
 
-
 import com.example.userapp.appuser.*;
 import com.example.userapp.security.config.JwtService;
 import com.example.userapp.token.Token;
 import com.example.userapp.token.TokenRepository;
 import com.example.userapp.token.TokenType;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -16,18 +17,14 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class AuthenticationService {
-
-
     private final BusinessRepository businessRepository;
     private final ParticularRepository particularRepository;
     private final UserRepository userRepository;
     private final TokenRepository tokenRepository;
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
-
     private final JwtService jwtService;
-
-
+    private static final Logger logger = LoggerFactory.getLogger(AuthenticationService.class);
 
     public AuthenticationResponse registerBusiness(BusinessRegisterRequest request) {
         var user = BusinessUser.builder()
@@ -96,6 +93,8 @@ public AuthenticationResponse registerParticular(ParticularRegisterRequest reque
 
     public void revokeAllUserTokens(AppUser user) {
         var validUserTokens = tokenRepository.findAllValidTokenByUser(user.getId());
+        logger.info(validUserTokens.toString());
+        logger.info(user.toString());
         if (validUserTokens.isEmpty())
             return;
         validUserTokens.forEach(token -> {
