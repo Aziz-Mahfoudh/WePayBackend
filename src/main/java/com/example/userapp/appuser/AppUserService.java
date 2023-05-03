@@ -1,5 +1,6 @@
 package com.example.userapp.appuser;
 
+import com.example.userapp.operation.GetRequest;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -16,6 +17,7 @@ public class AppUserService implements UserDetailsService {
             "User with email %s not found";
     private final UserRepository userRepository;
     private final ParticularRepository particularRepository;
+
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         return userRepository.findByEmail(email)
@@ -56,4 +58,10 @@ public class AppUserService implements UserDetailsService {
         AppUser appUser = userRepository.findAppUserById(id);
         return appUser.getBalance();
     }
+
+    public Integer getUserId(GetRequest request) {
+        return userRepository.findId(request.getEmail());
+    }
+
+
 }

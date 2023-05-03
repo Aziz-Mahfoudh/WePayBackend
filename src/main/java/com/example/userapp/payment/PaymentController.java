@@ -1,5 +1,6 @@
 package com.example.userapp.payment;
 
+import com.example.userapp.operation.GetRequest;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -40,7 +41,7 @@ public class PaymentController {
     }
 
     @GetMapping("/payments/formatted/{id}")
-    public ResponseEntity<List<PaymentHistoryResponse>> getAllPaymentsByPayerIdForHistory(@PathVariable Integer id) {
+    public ResponseEntity<List<PaymentHistoryResponse>> getAllPaymentsByPayerIdForHistory(@PathVariable  Integer id) {
         return ResponseEntity.ok(paymentService.getAllPaymentsByPayerIdForHistory(id));
     }
 

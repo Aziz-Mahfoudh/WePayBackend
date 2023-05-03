@@ -5,10 +5,7 @@ import com.example.userapp.appuser.AppUserService;
 import com.example.userapp.appuser.BalanceUpdateRequest;
 import com.example.userapp.appuser.ParticularUserUpdateRequest;
 import lombok.AllArgsConstructor;
-import org.apache.coyote.Response;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -31,7 +28,10 @@ public class UserOperationController {
         return ResponseEntity.ok(appUserService.loadUserById(id));
     }
 
-
+    @GetMapping("/users/get")
+    public ResponseEntity<Integer> getUserId(@RequestBody GetRequest request) {
+        return ResponseEntity.ok(appUserService.getUserId(request));
+    }
     @PutMapping("/users/particular/{id}")
     public ResponseEntity<AppUser> updateUserById(@RequestBody ParticularUserUpdateRequest request, @PathVariable Integer id) {
         return ResponseEntity.ok(appUserService.updateUserById(request, id));
@@ -46,9 +46,10 @@ public class UserOperationController {
         return ResponseEntity.ok(appUserService.deleteUserById(id));
     }
 
-    @GetMapping("/users/{id}/balance")
+    @GetMapping("/users/balance/{id}")
     public ResponseEntity<Double> getUserBalance(@PathVariable Integer id) {
         return ResponseEntity.ok(appUserService.getUserBalance(id));
     }
+
 
 }

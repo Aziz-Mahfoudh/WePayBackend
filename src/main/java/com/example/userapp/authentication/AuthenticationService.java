@@ -40,6 +40,7 @@ public class AuthenticationService {
         var savedUser = businessRepository.save(user);
         var jwtToken = jwtService.generateToken(user);
         saveUserToken(savedUser, jwtToken);
+
         return AuthenticationResponse.builder()
                 .accessToken(jwtToken)
                 .build();
@@ -59,7 +60,9 @@ public AuthenticationResponse registerParticular(ParticularRegisterRequest reque
     var savedUser = particularRepository.save(user);
     var jwtToken = jwtService.generateToken(user);
     saveUserToken(savedUser, jwtToken);
+
     return AuthenticationResponse.builder()
+            .id(userRepository.findId(savedUser.getEmail()))
             .accessToken(jwtToken)
             .build();
 }
@@ -75,7 +78,9 @@ public AuthenticationResponse registerParticular(ParticularRegisterRequest reque
         var jwtToken = jwtService.generateToken(user);
         revokeAllUserTokens(user);
         saveUserToken(user, jwtToken);
+
         return AuthenticationResponse.builder()
+                .id(userRepository.findId(user.getEmail()))
                 .accessToken(jwtToken)
                 .build();
     }

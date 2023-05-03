@@ -1,7 +1,6 @@
 package com.example.userapp.payment;
 
 import com.example.userapp.appuser.*;
-
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,6 +14,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class PaymentService {
 
+    private final UserRepository userRepository;
     private final BusinessRepository businessRepository;
     private final ParticularRepository particularRepository;
     private final PaymentRepository paymentRepository;
@@ -162,7 +162,8 @@ public class PaymentService {
     }
 
      public List<PaymentHistoryResponse> getAllPaymentsByPayerIdForHistory(Integer id) {
-        List<Payment> payments = paymentRepository.findPaymentsByPayerId(id);
+        ParticularUser user = particularRepository.findAppUserById(id);
+        List<Payment> payments = paymentRepository.findPaymentsByPayerId(userRepository.findId(user.getEmail()));
         List<PaymentHistoryResponse> paymentHistoryResponseList = new ArrayList<>();
         for(Payment payment : payments) {
             var businessUser = payment.getBeneficiary();

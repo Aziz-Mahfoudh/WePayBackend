@@ -11,5 +11,6 @@ import java.util.Optional;
 @Transactional(readOnly = true)
 public interface ParticularRepository extends JpaRepository<ParticularUser, Integer> {
     ParticularUser findAppUserById(Integer id) throws UserNotFoundException;
+
     ParticularUser findByEmail(String email);
 }

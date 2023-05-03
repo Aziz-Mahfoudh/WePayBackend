@@ -21,7 +21,7 @@ import java.util.UUID;
 public class ParticularUser extends AppUser{
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String firstName;
     private String lastName;

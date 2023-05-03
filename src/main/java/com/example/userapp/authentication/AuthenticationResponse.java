@@ -15,5 +15,7 @@ public class AuthenticationResponse {
 
     @JsonProperty("access_token")
     private String accessToken;
+    @JsonProperty("id")
+    private Integer id;
 
 }
