@@ -2,15 +2,16 @@ package com.example.userapp.appuser;
 
 import com.example.userapp.payment.Payment;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import lombok.ToString.Exclude;
 import lombok.experimental.SuperBuilder;
 import java.util.List;
 import java.util.UUID;
 
 @EntityListeners(BusinessUserListener.class)
-@Data
+@Getter
+@Setter
+@EqualsAndHashCode
 @SuperBuilder
 @AllArgsConstructor
 @NoArgsConstructor

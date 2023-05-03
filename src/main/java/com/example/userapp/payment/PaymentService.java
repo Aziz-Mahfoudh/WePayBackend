@@ -162,17 +162,30 @@ public class PaymentService {
     }
 
      public List<PaymentHistoryResponse> getAllPaymentsByPayerIdForHistory(Integer id) {
-        ParticularUser user = particularRepository.findAppUserById(id);
-        List<Payment> payments = paymentRepository.findPaymentsByPayerId(userRepository.findId(user.getEmail()));
+        AppUser user = userRepository.findAppUserById(id);
+         List<Payment> payments = new ArrayList<>();
+        if (user.getAccountType() == AccountType.PARTICULAR) {
+           payments = paymentRepository.findPaymentsByPayerId(userRepository.findId(user.getEmail()));
+         }
+        else if (user.getAccountType() == AccountType.BUSINESSS){
+            payments = paymentRepository.findPaymentsByBeneficiaryId(userRepository.findId(user.getEmail()));
+        }
+
         List<PaymentHistoryResponse> paymentHistoryResponseList = new ArrayList<>();
-        for(Payment payment : payments) {
+         for(Payment payment : payments) {
             var businessUser = payment.getBeneficiary();
-            if (businessUser == null) {
-                logger.info("Business user is null");
+            var particularUser = payment.getPayer();
+            String name = new String();
+            if (user.getAccountType() == AccountType.PARTICULAR) {
+                name = businessUser.getStoreName();
+             }
+            else if (user.getAccountType() == AccountType.BUSINESSS){
+                name =  particularUser.getFirstName() + " " + particularUser.getLastName();
             }
-            PaymentHistoryResponse paymentHistoryResponse = PaymentHistoryResponse.builder()
+
+             PaymentHistoryResponse paymentHistoryResponse = PaymentHistoryResponse.builder()
                     .amount(payment.getTotal())
-                    .storeName(businessUser.getStoreName())
+                    .storeName(name)
                     .date(payment.getTimeStamp())
                     .currency(payment.getCurrency())
                     .build();

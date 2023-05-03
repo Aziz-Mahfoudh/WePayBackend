@@ -14,7 +14,9 @@ import java.util.List;
 import java.util.UUID;
 
 @EntityListeners(AppUserListener.class)
-@Data
+@Getter
+@Setter
+@EqualsAndHashCode
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor

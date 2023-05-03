@@ -12,4 +12,5 @@ public interface PaymentRepository extends JpaRepository<Payment, Integer> {
     Payment findByPaymentId(String paymentId);
 
     List<Payment> findPaymentsByPayerId(Integer id);
+    List<Payment> findPaymentsByBeneficiaryId(Integer id);
 }

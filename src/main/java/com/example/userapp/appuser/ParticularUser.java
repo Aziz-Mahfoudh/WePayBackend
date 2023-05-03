@@ -3,16 +3,16 @@ package com.example.userapp.appuser;
 import com.example.userapp.payment.Payment;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 import java.util.List;
 import java.util.UUID;
 
 @EntityListeners(ParticularUserListener.class)
-@Data
+@Getter
+@Setter
+@EqualsAndHashCode
 @SuperBuilder
 @AllArgsConstructor
 @NoArgsConstructor

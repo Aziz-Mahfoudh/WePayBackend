@@ -42,6 +42,7 @@ public class AuthenticationService {
         saveUserToken(savedUser, jwtToken);
 
         return AuthenticationResponse.builder()
+                .id(userRepository.findId(savedUser.getEmail()))
                 .accessToken(jwtToken)
                 .build();
 }
