@@ -51,5 +51,10 @@ public class UserOperationController {
         return ResponseEntity.ok(appUserService.getUserBalance(id));
     }
 
+    @GetMapping("/users/identity/{id}")
+    public ResponseEntity<String> getUserIdentity(@PathVariable Integer id) {
+        return ResponseEntity.ok(appUserService.getUserIdentity(id));
+    }
+
 
 }

@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class PaymentRequest {
 
-    Integer beneficiaryId;
+    String beneficiaryId;
     Double total;
     String currency;
     String method;

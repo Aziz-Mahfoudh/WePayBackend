@@ -64,4 +64,11 @@ public class AppUserService implements UserDetailsService {
     }
 
 
+    public String getUserIdentity(Integer id) {
+        ParticularUser user = particularRepository.findAppUserById(id);
+        return user.getFirstName() + " " + user.getLastName();
+    }
+
+
+
 }

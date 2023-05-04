@@ -49,4 +49,9 @@ public class PaymentController {
     public ResponseEntity<List<String>> splitPayment(@RequestBody SplitPaymentRequest request) {
         return ResponseEntity.ok(paymentService.splitPayment(request));
     }
+
+    @GetMapping("/informations/{paymentId}")
+    public ResponseEntity<PaymentInformationsResponse> getPaymentInformations(@PathVariable("paymentId") String paymentId) {
+        return ResponseEntity.ok(paymentService.getPaymentInformations(paymentId));
+    }
 }

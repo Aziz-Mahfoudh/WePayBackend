@@ -26,8 +26,8 @@ public class PaymentService {
     public PaymentResponse createPayment(PaymentRequest paymentRequest) {
 
         String paymentId = generatePaymentId();
-        BusinessUser businessUser = businessRepository.findBusinessUserById(paymentRequest.getBeneficiaryId());
-
+        BusinessUser businessUser = businessRepository.findBusinessUserById(Integer.parseInt(paymentRequest.getBeneficiaryId()));
+        logger.info(businessUser.toString());
         Payment payment = Payment.builder()
                 .beneficiary(businessUser)
                 .paymentId(paymentId)
@@ -204,5 +204,15 @@ public class PaymentService {
     public String deleteAllPayments() {
         paymentRepository.deleteAll();
         return "Done";
+    }
+
+    public PaymentInformationsResponse getPaymentInformations(String paymentId) {
+        logger.info(paymentId);
+        Payment payment = paymentRepository.findByPaymentId(paymentId);
+        logger.info(payment.toString());
+        return PaymentInformationsResponse.builder()
+                .total(payment.getTotal())
+                .currency(payment.getCurrency())
+                .build();
     }
 }
